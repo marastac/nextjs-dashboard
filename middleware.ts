@@ -1,2 +1,6 @@
-export { auth as middleware } from 'next-auth';
-export const config = { matcher: ['/dashboard/:path*'] };
+// /middleware.ts
+export { auth as middleware } from '@/auth';
+
+export const config = {
+  matcher: ['/dashboard/:path*'],
+};
