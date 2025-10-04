@@ -7,15 +7,16 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data';
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { query?: string; page?: string };
-}) {
-  const query = searchParams?.query ?? '';
+type SearchParams = Record<string, string | string[] | undefined>;
+
+export default async function Page(
+  // Tipado explícito para evitar la exigencia de Promise<any>
+  { searchParams }: { searchParams?: SearchParams }
+) {
+  const query =
+    typeof searchParams?.query === 'string' ? searchParams.query : '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  // total de páginas según el query
   const totalPages = await fetchInvoicesPages(query);
 
   return (
